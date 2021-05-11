@@ -9,17 +9,36 @@
     "clean": "rimraf dist/*",
     "tsc": "tsc",
     "build": "npm-run-all clean tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "check-types": "tsc --noEmit",
+    "eslint": "eslint src/**/*.ts",
+    "eslint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write 'src/**/*.{js,ts,json}'",
+    "lint": "npm-run-all eslint check-types",
+    "lint:fix": "npm-run-all eslint:fix check-types format",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^15.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "8.3.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "2.3.0",
     "rimraf": "^2.7.1",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4"
+  },
+  "lint-staged": {
+    "*.{js.ts}": "eslint --cache --fix",
+    "*.ts": "tsc --noEmit",
+    "*.{js,ts,json}": "prettier --write"
   }
 }
